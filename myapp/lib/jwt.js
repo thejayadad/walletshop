@@ -1,21 +1,23 @@
 import jwt from 'jsonwebtoken'
+import { decode } from 'next-auth/jwt'
 
-// signing jwt
 export function signJwtToken(payload, options = {}) {
-    const secret = process.env.JWT_SECRET;
-    const token = jwt.sign(payload, secret, options);
-    return token;
+    const secret = process.env.NEXTAUTH_SECRET
+    const token = jwt.sign(payload, secret, options)
+
+    return token
 }
 
-
-// verifying jwt
-export function verifyJwtToken(token) {
+export async function verifyJwtToken(sessionToken){
     try {
-        const secret = process.env.JWT_SECRET;
-        const payload = jwt.verify(token, secret);
-        return payload;
+        const decoded = await decode({
+            token: sessionToken,
+            secret: process.env.NEXTAUTH_SECRET
+        })
+
+        return decoded
     } catch (error) {
-        console.error(error);
-        return null;
+        console.error(error)
+        return null
     }
 }

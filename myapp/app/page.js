@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import Hero from '@/components/Hero/Hero'
+import ProductList from '@/components/ProductList/ProductList'
 
 export default function Home() {
   return (
     <main>
-      homePAge
+      <Hero />
+      <ProductList />
     </main>
   )
 }
